@@ -1,27 +1,85 @@
 <template>
-  <div id="app">    
-    <Home />
+  <div id="app" v-bind:class="{ loaded: loaded, 'chat-mode': signed }">
+    <div class="content">
+      <Home v-if="!signed" @signIn="signIn" />
+    </div>
   </div>
 </template>
 
 <script>
-import Home from './components/Home.vue'
+import Home from "./components/Home.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Home
-  }
-}
+    Home,
+  },
+  data() {
+    return {
+      loaded: false,
+      signed: false,
+    };
+  },
+  created() {
+    setTimeout(() => {
+      this.loaded = true;
+    }, 200);
+  },
+  computed: {},
+  methods: {
+    signIn() {
+      this.signed = true;
+    },
+  },
+};
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="sass">
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap')
+
+html
+  box-sizing: border-box
+  height: 100%
+
+*, *:before, *:after
+  box-sizing: inherit
+
+body
+  margin: 0
+  height: 100%
+  background-color: #f8f8f8
+
+#app  
+  font-family: 'Roboto', sans-serif
+  color: #2c3e50
+  transform: translateY(-15%)
+  opacity: 0
+  transition: all 0.9s ease
+  height: 100%
+  $app: &
+  &.loaded
+    transform: translateY(0%)
+    opacity: 1
+
+  > .content
+    width: 95%
+    max-width: 600px
+    margin: auto
+    height: 100%
+    border-bottom-right-radius: 20px
+    border-bottom-left-radius: 20px
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 18px
+    transition: max-height 2.2s linear 0.3s, border-radius 1.5s ease 0.3s
+    background: #fff
+    padding: 20px
+    height: auto
+    max-height: 80vh
+
+    @at-root #{$app}.chat-mode .content
+      height: 100%
+      max-height: 1000px
+      border-radius: 0
+
+*:focus
+  outline: none
 </style>
