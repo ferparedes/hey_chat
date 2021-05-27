@@ -3,7 +3,7 @@ import { resolvers } from './resolvers';
 
 const typeDefs = `
     type Query {
-        hello: String        
+        chat: [Message]        
     }
 
     type User {
@@ -13,9 +13,9 @@ const typeDefs = `
 
     type Message {
         _id: ID
-        user_id: ID
+        user: User!        
         type: String
-        value: String
+        value: String        
     }
 
     type Mutation {
@@ -28,7 +28,7 @@ const typeDefs = `
     }
 
     input MessageInput {           
-        user_id: ID
+        user: ID
         type: String
         value: String!
     }

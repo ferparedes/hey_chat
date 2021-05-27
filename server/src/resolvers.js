@@ -3,8 +3,8 @@ import Message from './models/Message';
 
 export const resolvers = {
     Query: {
-        hello: () => {
-            return 'test';
+        async chat() {
+            return await Message.find().populate('user');
         }
     },
     Mutation: {
