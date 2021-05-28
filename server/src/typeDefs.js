@@ -1,7 +1,4 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import { resolvers } from './resolvers';
-
-const typeDefs = `
+export const typeDefs = `
     type Query {
         chat: [Message]        
     }
@@ -32,9 +29,8 @@ const typeDefs = `
         type: String
         value: String!
     }
-`;
 
-export default makeExecutableSchema({
-    typeDefs: typeDefs,
-    resolvers: resolvers
-});
+    type Subscription {
+        chat: Message!
+    }
+`;

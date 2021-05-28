@@ -13,10 +13,22 @@ export const resolvers = {
             await user.save();
             return user;
         },
-        async createMessage(_, { input }) {
+        async createMessage(_, { input }, { pubsub }) {
             const msg = new Message(input);
-            await msg.save();
+            await msg.save().then(m => m.populate('user').execPopulate());
+
+            pubsub.publish('chat', {
+                chat: msg
+            });
+
             return msg;
+        }
+    },
+    Subscription: {
+        chat: {
+            subscribe(parent, args, { pubsub }) {
+                return pubsub.asyncIterator('chat');
+            }
         }
     }
 };

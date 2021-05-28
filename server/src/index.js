@@ -1,18 +1,45 @@
-import express from 'express';
-import { graphqlHTTP } from 'express-graphql';
-import { connect } from './database';
-import schemas from './schemas'
+import { GraphQLServer, PubSub } from 'graphql-yoga';
+import './database';
+import { typeDefs } from './typeDefs'
+import { resolvers } from './resolvers';
 
-connect();
+const pubsub = new PubSub();
 
-const app = express();
-
-app.use('/graphql', graphqlHTTP({
-    schema: schemas,
-    graphiql: true,
+const server = new GraphQLServer({
+    typeDefs,
+    resolvers,
     context: {
+        pubsub
     }
-}));
+})
+const options = {
+    port: 1987
+};
 
-app.listen(1987);
-console.log('Running a GraphQL API server at http://localhost:1987/graphql');
+server.start(options, ({ port }) => {
+    console.log("Server on port:", port);
+  });
+  
+
+// const app = express();
+
+// app.use(cors());
+
+// app.use('/graphql', graphqlHTTP({
+//     schema: schemas,
+//     graphiql: true,
+//     context: {
+//     }
+// }));
+
+// server.start(options, ({ port }) => {
+//     console.log(
+//         `Graphql Server started, listening on port ${port} for incoming requests.`,
+//     )
+// })
+
+
+
+
+// // app.listen(1987);
+// console.log('Running a GraphQL API server at http://localhost:1987/graphql');
