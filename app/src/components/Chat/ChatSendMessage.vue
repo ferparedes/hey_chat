@@ -1,7 +1,12 @@
 <template>
   <div id="chat-send-message">
     <form @submit.prevent="sendMessage">
-      <input type="text" placeholder="Type a message" v-model="message" />
+      <input
+        ref="sendMessageInput"
+        type="text"
+        placeholder="Type a message"
+        v-model="message"
+      />
     </form>
     <div class="send" title="Send message" v-on:click="sendMessage">
       <img src="@/assets/images/send.png" />
@@ -41,6 +46,7 @@ export default {
         })
         .then(() => {
           this.message = "";
+          this.$refs.sendMessageInput.focus();
         })
         .catch((error) => {
           console.error(error);
