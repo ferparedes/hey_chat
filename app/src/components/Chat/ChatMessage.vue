@@ -1,9 +1,9 @@
 <template>
-  <div class="chat-message">
+  <div class="chat-message" v-bind:class="{ owner: isMessageOwner }">
     <div class="message-content">
       <div class="by">{{ message.user.name }}</div>
       {{ message.value }}
-      <div class="created_at">05:40 pm</div>
+      <div class="created_at">{{ createdAt }}</div>
     </div>
   </div>
 </template>
@@ -12,6 +12,26 @@
 export default {
   name: "ChatMessage",
   props: ["message"],
+  computed: {
+    isMessageOwner() {
+      return this.$store.getters.userId == this.message.user._id;
+    },
+    createdAt() {
+      const timestamp = this.$store.state.user._id.toString().substring(0, 8);
+      const date = new Date(parseInt(timestamp, 16) * 1000);
+      let hours = date.getHours();
+      let minutes = (date.getMinutes() < 10 ? "0" : "") + date.getMinutes();
+      const ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+
+      return `${hours}:${minutes} ${ampm} ${
+        (date.getMonth() + 1 < 10 ? "0" : "") + (date.getMonth() + 1)
+      }/${
+        (date.getDate() < 10 ? "0" : "") + date.getDate()
+      }/${date.getFullYear()}`;
+    },
+  },
 };
 </script>
 
@@ -24,7 +44,7 @@ export default {
 
   .message-content {
     max-width: 80%;
-    min-width: 100px;
+    min-width: 150px;
     padding: 5px 10px;
     background: #fff;
     border-radius: 12px;

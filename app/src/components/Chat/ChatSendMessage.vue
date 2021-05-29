@@ -33,12 +33,12 @@ export default {
             }
           `,
           variables: {
-            user: "60b19277aad263390417bbe0",
+            user: this.$store.getters.userId,
             value: this.message,
           },
         })
-        .then((result) => {
-          console.log(result.data.createMessage);          
+        .then(() => {
+          this.message = "";
         })
         .catch((error) => {
           console.error(error);

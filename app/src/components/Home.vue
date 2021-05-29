@@ -88,8 +88,8 @@ export default {
             user: this.username,
           },
         })
-        .then((result) => {
-          console.log(result.data.createUser);
+        .then((result) => {          
+          this.$store.commit('setUser', result.data.createUser);
           this.$emit("signIn");
         })
         .catch((error) => {

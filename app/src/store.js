@@ -1,42 +1,31 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import apolloClient from './apollo.js';
-import gql from 'graphql-tag';
 
 Vue.use(Vuex)
 
-// let chatObserver;
-
 const store = new Vuex.Store({
     state: {
+        user: {
+            _id: '',
+            name: ''
+        },
         chat: {
             messages: []
         }
     },
-    mutations: {
-        SET_CHAT_MESSAGES(state, messages) {
-            state.chat.messages = messages;
-        }
+    getters: {
+        chatMessages: state => {
+            return state.chat.messages;
+        },
+        userId: state => state.user._id,
+        user: state => state.user,
     },
-    actions: {
-        getChatMessages(context) {
-            apolloClient.query({
-                query: gql`
-                    {
-                        chat {
-                            _id
-                            user {
-                              _id
-                              name
-                            }
-                            type
-                            value
-                        }
-                    }
-                `
-            }).then(result => {
-                context.commit('SET_CHAT_MESSAGES', result.data.chat);
-            });
+    mutations: {
+        setUser(state, user) {
+            state.user = user;
+        },
+        setChat(state, chat) {
+            state.chat.messages = chat;
         }
     }
 });

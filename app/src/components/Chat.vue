@@ -1,7 +1,7 @@
 <template>
   <div id="chat">
     <ChatHeader />
-    <ChatMessages :messages="chat" />
+    <ChatMessages :messages="messages" />
     <ChatSendMessage />
   </div>
 </template>
@@ -23,6 +23,12 @@ export default {
   data() {
     return {};
   },
+  computed: {
+    messages() {
+      return this.$store.getters.chatMessages;
+    },
+  },
+  methods: {},
   apollo: {
     chat: {
       query: gql`
@@ -37,6 +43,9 @@ export default {
           }
         }
       `,
+      result({ data }) {
+        this.$store.commit("setChat", data.chat);
+      },
       subscribeToMore: {
         document: gql`
           subscription onMessageAdded {

@@ -7,7 +7,8 @@ import { getMainDefinition } from 'apollo-utilities'
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import App from './App.vue'
-
+import 'es6-promise/auto'
+import store from './store'
 
 Vue.config.productionTip = false
 
@@ -45,5 +46,6 @@ Vue.use(VueApollo)
 
 new Vue({
   apolloProvider,
+  store,
   render: h => h(App)
 }).$mount('#app')
