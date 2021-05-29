@@ -1,7 +1,10 @@
 <template>
   <div id="chat-messages">
-    CHAT
-    <ChatMessage v-for="message in messages" :key="message._id" :message="message" />
+    <ChatMessage
+      v-for="message in messages"
+      :key="message._id"
+      :message="message"
+    />
   </div>
 </template>
 
@@ -9,8 +12,8 @@
 import ChatMessage from "./ChatMessage";
 
 export default {
-  name: 'ChatMessages',
-  props: ['messages'],
+  name: "ChatMessages",
+  props: ["messages"],
   components: {
     ChatMessage,
   },
@@ -23,5 +26,6 @@ export default {
 <style lang="scss">
 #chat-messages {
   padding: 10px 20px 5px;
+  background: #ccc;
 }
 </style>

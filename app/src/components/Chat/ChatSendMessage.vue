@@ -1,6 +1,5 @@
 <template>
   <div id="chat-send-message">
-    {{ message }}
     <input type="text" placeholder="Type a message" v-model="message" />
     <div class="send" title="Send message" v-on:click="sendMessage">
       <img src="@/assets/images/send.png" />
@@ -26,7 +25,7 @@ export default {
 
 <style lang="scss">
 #chat-send-message {
-  padding: 20px 20px;
+  padding: 20px 20px 30px;
   background: #e8e8e8;
   border-top: 2px solid #ccc;
   display: flex;
