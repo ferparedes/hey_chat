@@ -24,6 +24,7 @@ export default {
 
   .message-content {
     max-width: 80%;
+    min-width: 100px;
     padding: 5px 10px;
     background: #fff;
     border-radius: 12px;
@@ -69,9 +70,11 @@ export default {
     }
 
     .created_at {
+      padding-top: 3px;
       font-size: 0.6em;
       text-align: right;
       color: #888;
+      font-weight: 300;
     }
   }
 }

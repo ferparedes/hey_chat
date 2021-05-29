@@ -8,6 +8,8 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: "ChatSendMessage",
   data() {
@@ -17,7 +19,30 @@ export default {
   },
   methods: {
     sendMessage() {
-      alert("send");
+      if (this.message.trim() == "") {
+        return;
+      }
+
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($user: ID!, $value: String!) {
+              createMessage(input: { user: $user, value: $value }) {
+                value
+              }
+            }
+          `,
+          variables: {
+            user: "60b19277aad263390417bbe0",
+            value: this.message,
+          },
+        })
+        .then((result) => {
+          console.log(result.data.createMessage);          
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
   },
 };
