@@ -30,19 +30,22 @@
 </template>
 
 <script>
+import gql from "graphql-tag";
+
 export default {
   name: "Home",
   data() {
     return {
       instructions: "Enter your name to enter the chat room",
       error: "",
-      username: "",
+      username: "fer",
       validations: {
         minLength: 2,
       },
       loading: false,
     };
   },
+  created() {},
   computed: {
     hasError() {
       return this.error.trim() == "" ? false : true;
@@ -63,14 +66,35 @@ export default {
         return;
       }
 
-      if (this.username.length < this.validations.minLength) {
+      if (this.username.trim().length < this.validations.minLength) {
         this.error = `Please enter at least ${this.validations.minLength} characters`;
         return;
       }
 
       this.loading = true;
-      this.instructions = 'Connecting to the chat room';
-      //   this.$emit("signIn");
+      this.instructions = "Connecting to the chat room";
+
+      this.$apollo
+        .mutate({
+          mutation: gql`
+            mutation($user: String!) {
+              createUser(input: { name: $user }) {
+                _id
+                name
+              }
+            }
+          `,
+          variables: {
+            user: this.username,
+          },
+        })
+        .then((result) => {
+          console.log(result.data.createUser);
+          this.$emit("signIn");
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     },
     clearError() {
       this.error = "";
@@ -79,73 +103,85 @@ export default {
 };
 </script>
 
-<style lang="sass">
-#home
-    display: flex
-    flex-direction: column
-    padding-bottom: 30px
-    align-items: center
+<style lang="scss">
+#home {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 30px;
+  align-items: center;
 
-    .title
-        display: flex
-        padding-top: 3rem
-        padding-bottom: 3.5rem
-        font-size: 2em
-        font-weight: 500
-        justify-content: center
+  .title {
+    display: flex;
+    padding-top: 3rem;
+    padding-bottom: 3.5rem;
+    font-size: 2em;
+    font-weight: 500;
+    justify-content: center;
 
-        img
-            width: 24px
-            margin-left: 10px
+    img {
+      width: 24px;
+      margin-left: 10px;
+    }
+  }
+  .content {
+    .instructions {
+      font-size: 1em;
+      padding-bottom: 1.5rem;
+      text-align: center;
+    }
 
-    .content
+    form {
+      padding-bottom: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-        .instructions
-            font-size: 1em
-            padding-bottom: 1.5rem
-            text-align: center
+      .enter {
+        width: 24px;
+        cursor: pointer;
+        $home-enter: &;
 
-        form
-            padding-bottom: 20px
-            display: flex
-            justify-content: center
-            align-items: center
+        img {
+          transition: all 0.45s ease;
+          @at-root #{$home-enter}:hover img {
+            transform: translateX(3px);
+          }
+        }
+      }
 
-            .enter
-                width: 24px
-                cursor: pointer
-                $home-enter: &
+      .loading {
+        width: 24px;
+        height: 24px;
 
-                img
-                    transition: all 0.45s ease
-                    @at-root #{$home-enter}:hover img
-                        transform: translateX(3px)
+        img {
+          width: 24px;
+        }
+      }
 
-            .loading
-                width: 24px
-                height: 24px
-                background: red
+      .field {
+        position: relative;
 
-                img
-                    width: 24px
+        input {
+          height: 40px;
+          font-size: 1.3em;
+          border: none;
+          flex: 0 1 auto;
+          border-bottom: 2px solid #474747;
+          transition: border 0.3s linear;
+          &:focus {
+            border-color: #5e9bf3;
+          }
+        }
 
-            .field
-                position: relative
-
-                input
-                    height: 40px
-                    font-size: 1.3em
-                    border: none
-                    flex: 0 1 auto
-                    border-bottom: 2px solid #474747
-                    transition: border 0.3s linear
-                    &:focus
-                        border-color: #5e9bf3
-
-                .hint
-                    font-size: 13px
-                    color: red
-                    position: absolute
-                    bottom: -20px
-                    left: 0
+        .hint {
+          font-size: 13px;
+          color: red;
+          position: absolute;
+          bottom: -20px;
+          left: 0;
+        }
+      }
+    }
+  }
+}
 </style>
