@@ -1,6 +1,8 @@
 <template>
   <div id="chat-send-message">
-    <input type="text" placeholder="Type a message" v-model="message" />
+    <form @submit.prevent="sendMessage">
+      <input type="text" placeholder="Type a message" v-model="message" />
+    </form>
     <div class="send" title="Send message" v-on:click="sendMessage">
       <img src="@/assets/images/send.png" />
     </div>
@@ -56,13 +58,16 @@ export default {
   display: flex;
   align-items: center;
 
-  input {
-    margin: 0 10px;
-    padding: 4px 20px;
-    height: 40px;
+  form {
     flex: 1 1 auto;
-    border-radius: 20px;
-    border: none;
+    margin: 0 10px;
+    input {
+      width: 100%;
+      padding: 4px 20px;
+      height: 40px;
+      border-radius: 20px;
+      border: none;
+    }
   }
 
   .send {
