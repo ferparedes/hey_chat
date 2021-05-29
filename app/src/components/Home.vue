@@ -8,7 +8,7 @@
     </div>
     <div class="content">
       <div class="instructions">{{ instructions }}</div>
-      <form>
+      <form @submit.prevent="signIn">
         <div class="field">
           <input
             type="text"
