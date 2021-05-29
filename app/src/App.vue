@@ -2,20 +2,20 @@
   <div id="app" v-bind:class="{ loaded: loaded, 'chat-mode': signed }">
     <div class="content">
       <Home v-if="!signed" @signIn="signIn" />
-      <ChatMessages />
+      <Chat v-if="signed" />
     </div>
   </div>
 </template>
 
 <script>
 import Home from "./components/Home.vue";
-import ChatMessages from "./components/Chat/ChatMessages.vue";
+import Chat from "./components/Chat.vue";
 
 export default {
   name: "App",
   components: {
     Home,
-    ChatMessages,
+    Chat,
   },
   data() {
     return {
@@ -51,6 +51,7 @@ body
   margin: 0
   height: 100%
   background-color: #e8e8e8
+  transition: background 0.8s ease
 
 #app
   font-family: 'Roboto', sans-serif
@@ -63,6 +64,8 @@ body
   &.loaded
     transform: translateY(0%)
     opacity: 1
+  &.chat-mode 
+    background: #ccc
 
   > .content
     width: 95%
@@ -79,6 +82,7 @@ body
     max-height: 80vh
 
     @at-root #{$app}.chat-mode .content
+      padding: 0px;
       height: 100%
       max-height: 1000px
       border-radius: 0

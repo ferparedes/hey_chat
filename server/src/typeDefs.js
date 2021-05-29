@@ -31,6 +31,6 @@ export const typeDefs = `
     }
 
     type Subscription {
-        chat: Message!
+        messageAdded: Message!
     }
 `;

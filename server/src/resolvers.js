@@ -17,17 +17,17 @@ export const resolvers = {
             const msg = new Message(input);
             await msg.save().then(m => m.populate('user').execPopulate());
 
-            pubsub.publish('chat', {
-                chat: msg
+            pubsub.publish('messageAdded', {
+                messageAdded: msg
             });
 
             return msg;
         }
     },
     Subscription: {
-        chat: {
+        messageAdded: {
             subscribe(parent, args, { pubsub }) {
-                return pubsub.asyncIterator('chat');
+                return pubsub.asyncIterator('messageAdded');
             }
         }
     }

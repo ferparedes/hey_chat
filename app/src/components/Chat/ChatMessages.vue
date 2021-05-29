@@ -1,44 +1,27 @@
 <template>
   <div id="chat-messages">
-    <!-- <div v-for="message in chat" :key="message._id">
-      {{ message.value }} /
-      {{ message.user.name }}
-    </div> -->
+    CHAT
+    <ChatMessage v-for="message in messages" :key="message._id" :message="message" />
   </div>
 </template>
 
 <script>
-import gql from "graphql-tag";
+import ChatMessage from "./ChatMessage";
 
 export default {
-  name: "ChatMessages",
-  data() {
-    return {
-      chat: [],
-    };
+  name: 'ChatMessages',
+  props: ['messages'],
+  components: {
+    ChatMessage,
   },
-  created() {
-    this.$apollo
-      .mutate({
-        mutation: gql`
-          query {
-            chat {
-              _id
-              value
-              user {
-                _id
-                name
-              }
-            }
-          }
-        `,
-      })
-      .then((result) => {
-        this.chat = result.data.chat;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }  
+  data() {
+    return {};
+  },
 };
 </script>
+
+<style lang="scss">
+#chat-messages {
+  padding: 10px 20px 5px;
+}
+</style>

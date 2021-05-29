@@ -38,7 +38,7 @@ export default {
     return {
       instructions: "Enter your name to enter the chat room",
       error: "",
-      username: "fer",
+      username: "f3r",
       validations: {
         minLength: 2,
       },
