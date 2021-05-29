@@ -50,8 +50,7 @@ html
 body
   margin: 0
   height: 100%
-  background-color: #e8e8e8
-  transition: background 0.8s ease
+  background-color: #2f3e5f   
 
 #app
   font-family: 'Roboto', sans-serif
@@ -63,9 +62,7 @@ body
   $app: &
   &.loaded
     transform: translateY(0%)
-    opacity: 1
-  &.chat-mode 
-    background: #ccc
+    opacity: 1  
 
   > .content
     width: 95%
