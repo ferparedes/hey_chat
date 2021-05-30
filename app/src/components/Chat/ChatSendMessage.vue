@@ -58,7 +58,7 @@ export default {
 
 <style lang="scss">
 #chat-send-message {
-  padding: 20px 20px 30px;
+  padding: 20px 20px;
   background: #e8e8e8;
   border-top: 2px solid #ccc;
   display: flex;

@@ -50,19 +50,19 @@ html
 body
   margin: 0
   height: 100%
-  background-color: #2f3e5f   
+  background-color: #2f3e5f
 
 #app
   font-family: 'Roboto', sans-serif
   color: #2c3e50
   transform: translateY(-15%)
   opacity: 0
-  transition: all 0.9s ease
+  transition: all 1.4s ease
   height: 100%
   $app: &
   &.loaded
     transform: translateY(0%)
-    opacity: 1  
+    opacity: 1
 
   > .content
     width: 95%
@@ -79,7 +79,7 @@ body
     max-height: 80vh
 
     @at-root #{$app}.chat-mode .content
-      padding: 0px;
+      padding: 0px
       height: 100%
       max-height: 1000px
       border-radius: 0

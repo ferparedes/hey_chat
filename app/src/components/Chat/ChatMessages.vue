@@ -1,5 +1,5 @@
 <template>
-  <div id="chat-messages">
+  <div id="chat-messages" ref="chatMessage">
     <ChatMessage
       v-for="message in messages"
       :key="message._id"
@@ -24,6 +24,16 @@ export default {
   computed: {
     user() {
       return this.$store.state.user;
+    },
+  },
+  updated() {
+    this.scrollToEnd();
+  },
+  methods: {
+    scrollToEnd() {
+      let containerChat = this.$refs.chatMessage;
+      containerChat.scrollTop = containerChat.scrollHeight;
+      console.log("scrollToEnd", containerChat.scrollHeight);
     },
   },
 };
