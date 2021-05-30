@@ -32,8 +32,7 @@ export default {
   methods: {
     scrollToEnd() {
       let containerChat = this.$refs.chatMessage;
-      containerChat.scrollTop = containerChat.scrollHeight;
-      console.log("scrollToEnd", containerChat.scrollHeight);
+      containerChat.scrollTop = containerChat.scrollHeight;      
     },
   },
 };
