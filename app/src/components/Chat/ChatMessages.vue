@@ -42,5 +42,9 @@ export default {
 #chat-messages {
   padding: 10px 20px 5px;
   background: #ccc;
+  background-image: url("../../assets/images/background-chat.jpg");
+  background-size: cover  100%;
+  background-position: center top;
+  background-attachment: fixed;
 }
 </style>
