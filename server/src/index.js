@@ -2,9 +2,10 @@ import { GraphQLServer, PubSub } from 'graphql-yoga';
 import './database';
 import { typeDefs } from './typeDefs'
 import { resolvers } from './resolvers';
+import dotenv from 'dotenv';
 
+dotenv.load();
 const pubsub = new PubSub();
-
 const server = new GraphQLServer({
     typeDefs,
     resolvers,
@@ -13,33 +14,9 @@ const server = new GraphQLServer({
     }
 })
 const options = {
-    port: 1987
+    port: process.env.GRAPHQL_PORT || '1987'
 };
 
 server.start(options, ({ port }) => {
-    console.log("Server on port:", port);
-  });
-  
-
-// const app = express();
-
-// app.use(cors());
-
-// app.use('/graphql', graphqlHTTP({
-//     schema: schemas,
-//     graphiql: true,
-//     context: {
-//     }
-// }));
-
-// server.start(options, ({ port }) => {
-//     console.log(
-//         `Graphql Server started, listening on port ${port} for incoming requests.`,
-//     )
-// })
-
-
-
-
-// // app.listen(1987);
-// console.log('Running a GraphQL API server at http://localhost:1987/graphql');
+    console.log(`Server on http://localhost:${options.port}`);
+});

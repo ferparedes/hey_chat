@@ -1,5 +1,8 @@
 import mongoose from 'mongoose'
-const mongoUrl = "mongodb://localhost/chat_ferparedes";
+import dotenv from 'dotenv';
+
+dotenv.load();
+const mongoUrl = `${process.env.MONGO_HOST}${process.env.MONGO_DB}${process.env.MONGO_CONNECTION_PARAMS}`;
 
 mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
